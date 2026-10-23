@@ -1,32 +1,62 @@
 # 🎓 Smart Attendance System – QR Code
 
 <p align="center">
+  <img src="docs/images/attendance-system-preview.png" alt="Smart Attendance System Preview" width="100%">
+</p>
 
-  *Smart • Simple • Secure • Efficient*
+<p align="center">
+  <strong>🚀 Pharos University in Alexandria</strong>
+  <br>
+  📚 CS405 – Cloud Computing Project
+  <br><br>
+  <em>Smart Attendance • Seamless Tracking • Containerized Deployment</em>
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
 </p>
 
 ---
 
-## 🌟 About The Project
+## 🌟 About the Project
 
-The **Smart Attendance System** is a web-based application designed to simplify university attendance management using QR code technology.
+The **Smart Attendance System – QR Code** is a web-based application designed to simplify university attendance management using QR code technology.
 
-The system allows instructors to generate QR codes for attendance sessions while students can check in and track their attendance records through an intuitive web interface.
+The system allows instructors to manage attendance sessions and generate QR codes, while students can check in and review their attendance records through a user-friendly web interface.
 
-Built with **Flask, MySQL, Docker, and Docker Compose**, this project demonstrates containerization, database integration, service communication, and cloud computing fundamentals.
+Built with **Python, Flask, MySQL, Docker, and Docker Compose**, this project demonstrates containerization, database integration, service communication, and cloud computing fundamentals.
 
 ### ✨ Key Features
 
-- 🔐 **User Authentication** — Separate access for students and instructors.
-- 📱 **QR Code Attendance** — Simplified attendance check-in.
-- 👨‍🏫 **Session Management** — Create and manage attendance sessions.
-- 📊 **Attendance Reports** — View student and session attendance records.
+- 🔐 **User Authentication** — Login functionality for students and instructors.
+- 📱 **QR Code Attendance** — Simplified student check-in.
+- 👨‍🏫 **Session Management** — Manage attendance sessions.
+- 📊 **Attendance Reports** — Review student and session attendance records.
 - 📈 **Statistics Dashboard** — Access general attendance statistics.
-- 🗄️ **MySQL Database** — Store student and attendance data.
-- 🐳 **Dockerized Architecture** — Run the entire application using Docker Compose.
-- 💾 **Persistent Storage** — Preserve database data using Docker volumes.
-- 🌐 **REST API** — Connect the frontend with the backend.
+- 🗄️ **MySQL Database** — Store attendance-related information.
+- 🐳 **Dockerized Deployment** — Run the application using Docker Compose.
+- 💾 **Persistent Storage** — Preserve database files using Docker volumes.
+- 🌐 **REST API** — Connect the frontend to the backend.
+- 🔗 **Shared Network** — Enable communication between application containers.
+
+---
+
+## 🖥️ Application Preview
+
+Explore the visual concept of the system, including its main interfaces and deployment architecture.
+
+<p align="center">
+  <img src="docs/images/attendance-system-preview.png" alt="Login, Dashboard, QR Code Attendance, and Docker Architecture" width="100%">
+</p>
+
+<p align="center">
+  <em>🔐 Login Interface • 📊 Dashboard • 📱 QR Attendance • 🏗️ System Architecture</em>
+</p>
+
+> 📝 **Note:** The image above is a visual design preview. The actual interface and features may differ depending on the implemented source code.
 
 ---
 
@@ -34,22 +64,22 @@ Built with **Flask, MySQL, Docker, and Docker Compose**, this project demonstrat
 
 ### 🛠️ Prerequisites
 
-Before running the project, make sure you have installed:
+Make sure the following tools are installed:
 
 - 🐳 [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - 💻 Git (optional, for cloning the repository)
 
 ### 🚀 Run the Application
 
-**Step 1:** Open your terminal in the project directory.
+**Step 1:** Open a terminal in the project root directory.
 
-**Step 2:** Run the following command:
+**Step 2:** Build and start the application:
 
 ```bash
 docker-compose up --build
 ```
 
-**Step 3:** Wait for the services to start, then open the application in your browser.
+**Step 3:** Wait for the services to initialize, then open your browser.
 
 | Service | URL |
 |---|---|
@@ -57,13 +87,13 @@ docker-compose up --build
 | ⚙️ Backend API | http://localhost:5000 |
 | 🗄️ MySQL Database | Internal Docker service |
 
-🎉 **That's it! Your application is ready to test once all services are running.**
+🎉 Your application is ready to test once all required services are running.
 
 ---
 
 ## 👥 Demo Accounts
 
-Use the following accounts to explore the system.
+Use the following credentials to test the application.
 
 | Role | User ID | Password |
 |---|---|---|
@@ -72,49 +102,67 @@ Use the following accounts to explore the system.
 | 🎓 Student | `S003` | `1234` |
 | 👨‍🏫 Instructor | `INST001` | `admin` |
 
-🔒 **Security Note:** These are demonstration credentials only. Use secure password hashing and replace default credentials before any production deployment.
+🔒 **Security Note:** These credentials are intended for demonstration purposes only. Replace default credentials and implement secure password hashing before production deployment.
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ System Architecture
 
-The application consists of three main services working together through a shared Docker network.
+The application is organized into three main services connected through a shared Docker network.
 
 ```text
-                    🌐 WEB BROWSER
-                          |
-                          v
-                 ┌──────────────────┐
-                 │  Frontend 🌐     │
-                 │  Flask Server    │
-                 │  Port: 3000      │
-                 └────────┬─────────┘
-                          |
-                          v
-                 ┌──────────────────┐
-                 │  Backend ⚙️      │
-                 │  Flask REST API  │
-                 │  Port: 5000      │
-                 └────────┬─────────┘
-                          |
-                          v
-                 ┌──────────────────┐
-                 │  MySQL Database  │
-                 │  Port: 3306      │
-                 └────────┬─────────┘
-                          |
-                          v
-                    💾 mysql_data
+                     🌐 WEB BROWSER
+                           |
+                           v
+                  ┌──────────────────┐
+                  │  FRONTEND 🌐     │
+                  │  Flask Server    │
+                  │  Port: 3000      │
+                  └────────┬─────────┘
+                           |
+                           v
+                  ┌──────────────────┐
+                  │  BACKEND ⚙️      │
+                  │  Flask REST API  │
+                  │  Port: 5000      │
+                  └────────┬─────────┘
+                           |
+                           v
+                  ┌──────────────────┐
+                  │  MYSQL DATABASE  │
+                  │  Port: 3306      │
+                  └────────┬─────────┘
+                           |
+                           v
+                     💾 mysql_data
 
-          🐳 Shared Network: attendance_network
+              🐳 Docker Network:
+                attendance_network
 ```
 
-### 📂 Project Structure
+### 📦 Application Services
+
+| Service | Responsibility |
+|---|---|
+| 🌐 Frontend | Serves the web interface. |
+| ⚙️ Backend | Handles API requests and application logic. |
+| 🗄️ MySQL | Stores application data. |
+| 💾 Docker Volume | Provides persistent database storage. |
+| 🔗 Docker Network | Enables communication between containers. |
+
+---
+
+## 📂 Project Structure
 
 ```text
 attendance-system/
 │
+├── 📄 README.md
 ├── 🐳 docker-compose.yml
+│
+├── 📁 docs/
+│   └── 📁 images/
+│       └── 🖼️ attendance-system-preview.png
 │
 ├── ⚙️ backend/
 │   ├── Dockerfile
@@ -126,90 +174,93 @@ attendance-system/
     ├── server.py
     ├── requirements.txt
     │
-    ├── templates/
+    ├── 📁 templates/
     │   └── index.html
     │
-    └── static/
-        ├── css/
+    └── 📁 static/
+        ├── 📁 css/
         │   └── style.css
         │
-        └── js/
+        └── 📁 js/
             └── app.js
 ```
 
 ### 📌 Main Components
 
-| Component | Responsibility |
+| File | Description |
 |---|---|
-| 🐳 `docker-compose.yml` | Orchestrates all application services. |
-| ⚙️ `backend/app.py` | Implements the Flask REST API and business logic. |
-| 🌐 `frontend/server.py` | Serves the frontend application. |
-| 🎨 `style.css` | Defines the user interface styling. |
-| 🖥️ `app.js` | Handles frontend interactions and API requests. |
-| 📄 `index.html` | Contains the main application interface. |
-| 🗄️ MySQL | Stores application data. |
+| `docker-compose.yml` | Defines and orchestrates the application services. |
+| `backend/Dockerfile` | Defines the backend container image. |
+| `backend/app.py` | Implements the Flask REST API. |
+| `backend/requirements.txt` | Lists backend Python dependencies. |
+| `frontend/Dockerfile` | Defines the frontend container image. |
+| `frontend/server.py` | Runs the frontend web server. |
+| `frontend/templates/index.html` | Contains the main HTML page. |
+| `frontend/static/css/style.css` | Defines the interface styling. |
+| `frontend/static/js/app.js` | Handles frontend interactions and API requests. |
+| `docs/images/attendance-system-preview.png` | Contains the README preview image. |
 
 ---
 
 ## 🐳 Docker & Cloud Computing Requirements
 
-This project demonstrates the following containerization and orchestration concepts.
+The project demonstrates the following containerization and orchestration concepts.
 
 | # | Requirement | Implementation |
 |---|---|---|
-| 1️⃣ | Three separate containers | Frontend, Backend, and Database |
+| 1️⃣ | Three containers | Frontend, Backend, and MySQL |
 | 2️⃣ | Separate Dockerfiles | Frontend and Backend |
 | 3️⃣ | Database container | MySQL service |
 | 4️⃣ | Persistent storage | `mysql_data` volume |
 | 5️⃣ | Service dependencies | `depends_on` |
-| 6️⃣ | Shared networking | `attendance_network` |
+| 6️⃣ | Shared network | `attendance_network` |
 | 7️⃣ | Container orchestration | Docker Compose |
-| 8️⃣ | Service communication | Internal Docker networking |
+| 8️⃣ | Service communication | Docker networking |
 
-💡 *The actual service names, ports, volumes, and networking configuration are defined in `docker-compose.yml`.*
+💡 The actual service names, port mappings, volumes, and networking settings are defined in `docker-compose.yml`.
 
 ---
 
 ## 🗄️ Database Design
 
-The system uses MySQL to organize and manage attendance-related information.
+The system uses MySQL to organize and manage attendance information.
 
 | Table | Description |
 |---|---|
 | 👨‍🎓 `students` | Stores student and account information according to the implemented schema. |
-| 📱 `qr_codes` | Stores QR codes and associated expiration information. |
+| 📱 `qr_codes` | Stores generated QR codes and associated expiration information. |
 | 📋 `attendance_records` | Stores student attendance records for individual sessions. |
 
 ### 💾 Data Persistence
 
-The `mysql_data` named volume is used to preserve database files beyond the lifecycle of individual containers.
+The named Docker volume `mysql_data` is intended to preserve database files beyond the lifecycle of individual containers.
 
-⚠️ Removing the volume with `docker-compose down -v` can permanently delete the stored database data.
+⚠️ Removing the volume using `docker-compose down -v` can permanently delete the stored database data.
 
 ---
 
 ## 🔌 REST API Endpoints
 
-The backend exposes the following endpoints for application functionality.
+The backend provides the following API endpoints.
 
 | Method | Endpoint | Description |
 |---|---|---|
-| 🔑 `POST` | `/api/login` | Authenticate a user. |
-| 🚪 `POST` | `/api/logout` | Log out a user. |
-| 📱 `POST` | `/api/generate-qr` | Generate a QR code for an attendance session. |
-| ✅ `POST` | `/api/checkin` | Process student attendance check-in. |
-| 📚 `GET` | `/api/sessions` | Retrieve attendance sessions. |
-| 📋 `GET` | `/api/session/:id/attendance` | Retrieve attendance for a specific session. |
-| 👨‍🎓 `GET` | `/api/student/:id/attendance` | Retrieve a student's attendance history. |
-| 📊 `GET` | `/api/stats` | Retrieve general attendance statistics. |
+| `POST` | `/api/login` | 🔐 Authenticate a user. |
+| `POST` | `/api/logout` | 🚪 Log out a user. |
+| `POST` | `/api/generate-qr` | 📱 Generate a QR code for an attendance session. |
+| `POST` | `/api/checkin` | ✅ Process a student check-in. |
+| `GET` | `/api/sessions` | 📚 Retrieve attendance sessions. |
+| `GET` | `/api/session/:id/attendance` | 📋 Retrieve attendance for a specific session. |
+| `GET` | `/api/student/:id/attendance` | 🎓 Retrieve a student's attendance history. |
+| `GET` | `/api/stats` | 📊 Retrieve general attendance statistics. |
 
-📌 *Request formats, response structures, and authorization rules depend on the actual backend implementation.*
+📌 Request formats, response structures, and authorization requirements depend on the implementation in `backend/app.py`.
 
 ---
 
 ## 🔄 How It Works
 
-The attendance process follows a simple workflow:
+The attendance process follows these steps:
 
 1. 🌐 The user opens the web application.
 2. 🔐 The student or instructor logs in.
@@ -217,7 +268,7 @@ The attendance process follows a simple workflow:
 4. 📱 The student scans the QR code.
 5. ⚙️ The backend validates the check-in request.
 6. ✅ The attendance record is saved in MySQL.
-7. 📊 The instructor can review attendance records and available statistics.
+7. 📊 The instructor reviews attendance records and available statistics.
 
 🔒 QR expiration, authorization, and duplicate check-in prevention should be enforced on the backend.
 
@@ -249,7 +300,7 @@ docker-compose up --build -d
 docker-compose ps
 ```
 
-### 📜 View Logs
+### 📜 View All Logs
 
 ```bash
 docker-compose logs
@@ -285,7 +336,7 @@ docker-compose down
 docker-compose down -v
 ```
 
-⚠️ **Warning:** The last command removes Compose-managed volumes, including `mysql_data` when configured as a Compose volume. Back up important data first.
+⚠️ **Warning:** The last command removes Compose-managed volumes, including `mysql_data` if configured as a Compose volume. Back up important data first.
 
 ---
 
@@ -293,7 +344,7 @@ docker-compose down -v
 
 ### 🔴 Port Already in Use
 
-If ports `3000` or `5000` are occupied, stop the conflicting process or modify the host port mappings in `docker-compose.yml`.
+If ports `3000` or `5000` are occupied, stop the conflicting process or update the host port mappings in `docker-compose.yml`.
 
 ### 🗄️ Database Connection Issues
 
@@ -359,9 +410,7 @@ For a more secure and production-ready application, consider implementing:
 ---
 
 <p align="center">
-
-  **🚀 Smart Attendance. Smarter Campus. 🎓**
-
-  *Developed as part of the CS405 – Cloud Computing course.*
-
+  <strong>🚀 Smart Attendance. Smarter Campus. 🎓</strong>
+  <br>
+  <em>Developed as part of the CS405 – Cloud Computing course.</em>
 </p>
