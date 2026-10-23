@@ -416,3 +416,4 @@ For a more secure and production-ready application, consider implementing:
   <br>
   <em>Developed as part of the CS405 – Cloud Computing course.</em>
 </p>
+"# Smart-Attendance-System-QR-Code" 
