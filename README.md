@@ -52,7 +52,7 @@ Explore the visual concept of the system, including its main interfaces and depl
 
 <p align="center">
   <img
-    src="docs/images/attendance-system-preview.png"
+    src="docs/images/banner.png"
     alt="Smart Attendance System Preview"
     width="100%"
   >
