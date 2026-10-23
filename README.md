@@ -48,12 +48,14 @@ Built with **Python, Flask, MySQL, Docker, and Docker Compose**, this project de
 
 Explore the visual concept of the system, including its main interfaces and deployment architecture.
 
-<p align="center">
-  <img src="docs/images/attendance-system-preview.png" alt="Login, Dashboard, QR Code Attendance, and Docker Architecture" width="100%">
-</p>
+## 🖥️ Application Preview
 
 <p align="center">
-  <em>🔐 Login Interface • 📊 Dashboard • 📱 QR Attendance • 🏗️ System Architecture</em>
+  <img
+    src="docs/images/attendance-system-preview.png"
+    alt="Smart Attendance System Preview"
+    width="100%"
+  >
 </p>
 
 > 📝 **Note:** The image above is a visual design preview. The actual interface and features may differ depending on the implemented source code.
