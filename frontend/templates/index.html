@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System | Pharos University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    
+    <style>
+        
+        #reader {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            background: #000;
+            margin-bottom: 15px;
+        }
+        #reader video { border-radius: 10px; }
+        
+        #reader__dashboard_section_csr button {
+            background-color: var(--primary-color, #2563eb);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="loginPage" class="page active">
+  <div class="login-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon">🎓</div>
+      <h1>Smart Attendance System</h1>
+      <p>Pharos University · CS405 · Cloud Computing</p>
+    </div>
+    <div class="form-group">
+      <label>User ID</label>
+      <input type="text" id="loginId" placeholder="Enter your user ID" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="loginPass" placeholder="Enter your password" />
+        <button class="pw-toggle" onclick="togglePw('loginPass')">👁</button>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="login()">Sign In</button>
+    <div id="loginError" class="error-msg"></div>
+    <div class="hint-box">
+      <strong>Default Admin:</strong> admin / admin123
+    </div>
+  </div>
+</div>
+
+
+<nav class="navbar hidden" id="navbar">
+  <div class="nav-brand">🎓 Smart Attendance</div>
+  <div class="nav-center" id="navTabs"></div>
+  <div class="nav-user">
+    <span class="nav-role-badge" id="navRole"></span>
+    <span id="navName"></span>
+    <button class="btn-nav-icon" onclick="showChangePassword()" title="Change Password">🔑</button>
+    <button class="btn-nav-icon" onclick="logout()" title="Logout">⏻</button>
+  </div>
+</nav>
+
+
+<div id="appContainer" class="hidden">
+
+  <div id="adminPanel" class="panel hidden">
+    <div class="container">
+      <div class="stats-row" id="adminStats"></div>
+      <div class="card">
+        <h3>➕ Add New User</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>User ID</label>
+            <input type="text" id="newUserId" placeholder="e.g. S001 or INST001" />
+          </div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="newUserName" placeholder="Full name" />
+          </div>
+          <div class="form-group">
+            <label>Email (optional)</label>
+            <input type="email" id="newUserEmail" placeholder="email@pharos.edu" />
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <select id="newUserRole">
+              <option value="student">Student</option>
+              <option value="instructor">Instructor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Default Password</label>
+            <div class="pw-wrap">
+              <input type="password" id="newUserPw" placeholder="Set initial password" />
+              <button class="pw-toggle" onclick="togglePw('newUserPw')">👁</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" style="max-width:200px" onclick="addUser()">Add User</button>
+        <div id="addUserMsg" class="msg-box hidden"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>👥 All Users</h3>
+          <div class="filter-tabs">
+            <button class="ftab active" onclick="filterUsers('all',this)">All</button>
+            <button class="ftab" onclick="filterUsers('student',this)">Students</button>
+            <button class="ftab" onclick="filterUsers('instructor',this)">Instructors</button>
+          </div>
+        </div>
+        <div id="usersTable"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="instructorPanel" class="panel hidden">
+    <div class="container">
+      <div class="stats-row" id="instructorStats"></div>
+      <div class="card">
+        <h3>⚡ Generate QR Code</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Course Name</label>
+            <input type="text" id="courseName" value="Cloud Computing CS405" />
+          </div>
+          <div class="form-group">
+            <label>Duration (minutes)</label>
+            <input type="number" id="qrDuration" value="10" min="1" max="60" />
+          </div>
+        </div>
+        <button class="btn-primary" style="max-width:200px" onclick="generateQR()">🔲 Generate QR</button>
+      </div>
+      <div id="qrDisplay" class="card qr-display-card hidden">
+        <div class="qr-left"><img id="qrImage" src="" alt="QR Code" /></div>
+        <div class="qr-right">
+          <div class="qr-status">✅ QR Code Ready</div>
+          <div class="qr-detail"><span>Session:</span> <strong id="qrSessionId"></strong></div>
+          <div class="qr-detail"><span>Expires:</span> <strong id="qrExpiry"></strong></div>
+          <div id="countdown" class="countdown"></div>
+          <div class="qr-token-box">
+            <label>Manual Entry Code</label>
+            <div class="token-row">
+              <code id="qrTokenText"></code>
+              <button onclick="copyToken()" class="btn-copy">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>📊 Sessions</h3>
+          <button class="btn-secondary" onclick="loadSessions()">↻ Refresh</button>
+        </div>
+        <div id="sessionsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="studentPanel" class="panel hidden">
+    <div class="container">
+      <div class="welcome-card">
+        <div class="welcome-text">
+          <h2>Welcome back, <span id="studentWelcomeName"></span> 👋</h2>
+          <p>Scan the session QR Code to mark your attendance</p>
+        </div>
+        <div class="welcome-stats">
+          <div class="ws-item">
+            <div class="ws-num" id="studentTotalAtt">-</div>
+            <div class="ws-label">Sessions Attended</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>📷 Mark Attendance</h3>
+          <div class="scanner-tabs">
+            <button class="stab active" onclick="switchScanTab('camera',this)">📷 Camera</button>
+            <button class="stab" onclick="switchScanTab('manual',this)">⌨️ Manual</button>
+          </div>
+
+          <div id="cameraTab">
+            <div id="cameraBox" style="border:none; background:transparent;">
+                <div id="reader"></div>
+            </div>
+            <button class="btn-primary" onclick="startScanner()" id="startCamBtn">Start Scanner</button>
+            <button class="btn-danger hidden" onclick="stopScanner()" id="stopCamBtn" style="background-color: #dc2626; color: white;">Stop Scanner</button>
+          </div>
+
+          <div id="manualTab" class="hidden">
+            <div class="form-group" style="margin-top:12px">
+              <label>Paste QR Code data</label>
+              <input type="text" id="manualQR" placeholder="ATTEND:SESSION_XXXX:token..." />
+            </div>
+            <button class="btn-primary" onclick="submitManualQR()">Submit Attendance</button>
+          </div>
+          <div id="checkinResult" class="result-box hidden"></div>
+        </div>
+
+        <div class="card">
+          <h3>📋 My Attendance History</h3>
+          <div id="myAttendanceList"><p class="empty">Loading...</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="changePwModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-hdr"><h3>🔑 Change Password</h3><button onclick="closeModal('changePwModal')">✕</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label>Current Password</label><input type="password" id="oldPw" /></div>
+        <div class="form-group"><label>New Password</label><input type="password" id="newPw" /></div>
+        <div class="form-group"><label>Confirm New Password</label><input type="password" id="confirmPw" /></div>
+        <button class="btn-primary" onclick="changePassword()">Update Password</button>
+        <div id="changePwMsg" class="msg-box hidden"></div>
+      </div>
+    </div>
+</div>
+
+<div id="attendanceModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-hdr"><h3>👥 Session Attendance</h3><button onclick="closeModal('attendanceModal')">✕</button></div>
+    <div class="modal-body" id="attendanceModalBody"></div>
+  </div>
+</div>
+
+<div id="resetPwModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-hdr"><h3>🔄 Reset User Password</h3><button onclick="closeModal('resetPwModal')">✕</button></div>
+    <div class="modal-body">
+      <p>Resetting password for: <strong id="resetPwUserId"></strong></p>
+      <input type="password" id="resetPwValue" placeholder="New password" class="form-group" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #ddd;"/>
+      <button class="btn-primary" onclick="doResetPassword()">Reset Password</button>
+      <div id="resetPwMsg" class="msg-box hidden"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/app.js?v=final_pro"></script>
+</body>
+</html>
